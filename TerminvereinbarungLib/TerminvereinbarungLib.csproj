@@ -53,11 +53,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behandlung.cs">
+      <DependentUpon>TerminvereinbarungModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Termin.cs">
+      <DependentUpon>TerminvereinbarungModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TerminvereinbarungModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TerminvereinbarungModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TerminvereinbarungModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TerminvereinbarungModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="TerminvereinbarungModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TerminvereinbarungModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>TerminvereinbarungModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Zeitslot.cs">
+      <DependentUpon>TerminvereinbarungModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +92,22 @@
     <None Include="TerminvereinbarungModel.edmx.diagram">
       <DependentUpon>TerminvereinbarungModel.edmx</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TerminvereinbarungModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TerminvereinbarungModel.Context.cs</LastGenOutput>
+      <DependentUpon>TerminvereinbarungModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="TerminvereinbarungModel.edmx.sql" />
+    <Content Include="TerminvereinbarungModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TerminvereinbarungModel.cs</LastGenOutput>
+      <DependentUpon>TerminvereinbarungModel.edmx</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

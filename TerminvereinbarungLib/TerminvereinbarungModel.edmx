@@ -4,88 +4,173 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="TerminvereinbarungModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
-        <EntityContainer Name="TerminvereinbarungModelTargetContainer" >
-        </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+    <Schema Namespace="TerminvereinbarungModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="TerminvereinbarungModelStoreContainer">
+    </EntityContainer>
+  </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="TerminvereinbarungModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
         <EntityContainer Name="TerminvereinbarungModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="UserSet" EntityType="TerminvereinbarungModel.User" />
           <EntitySet Name="BehandlungSet" EntityType="TerminvereinbarungModel.Behandlung" />
-          <EntitySet Name="NamedPersonSet" EntityType="TerminvereinbarungModel.NamedPerson" />
-          <AssociationSet Name="AdminBehandlung" Association="TerminvereinbarungModel.AdminBehandlung">
-            <End Role="Admin" EntitySet="NamedPersonSet" />
+          <EntitySet Name="TerminSet" EntityType="TerminvereinbarungModel.Termin" />
+          <EntitySet Name="ZeitslotSet" EntityType="TerminvereinbarungModel.Zeitslot" />
+          <AssociationSet Name="Arzt" Association="TerminvereinbarungModel.Arzt">
+            <End Role="User" EntitySet="UserSet" />
             <End Role="Behandlung" EntitySet="BehandlungSet" />
           </AssociationSet>
-          <AssociationSet Name="ArztBehandlung" Association="TerminvereinbarungModel.ArztBehandlung">
-            <End Role="Arzt" EntitySet="NamedPersonSet" />
+          <AssociationSet Name="ArztTermin" Association="TerminvereinbarungModel.ArztTermin">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="Termin" EntitySet="TerminSet" />
+          </AssociationSet>
+          <AssociationSet Name="PatientTermin" Association="TerminvereinbarungModel.PatientTermin">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="Termin" EntitySet="TerminSet" />
+          </AssociationSet>
+          <AssociationSet Name="BehandlungTermin" Association="TerminvereinbarungModel.BehandlungTermin">
+            <End Role="Behandlung" EntitySet="BehandlungSet" />
+            <End Role="Termin" EntitySet="TerminSet" />
+          </AssociationSet>
+          <AssociationSet Name="TerminZeitslot" Association="TerminvereinbarungModel.TerminZeitslot">
+            <End Role="Termin" EntitySet="TerminSet" />
+            <End Role="Zeitslot" EntitySet="ZeitslotSet" />
+          </AssociationSet>
+          <AssociationSet Name="BehandlungAdmin" Association="TerminvereinbarungModel.BehandlungAdmin">
+            <End Role="User" EntitySet="UserSet" />
             <End Role="Behandlung" EntitySet="BehandlungSet" />
           </AssociationSet>
-          <AssociationSet Name="PatientBehandlung" Association="TerminvereinbarungModel.PatientBehandlung">
-            <End Role="Patient" EntitySet="NamedPersonSet" />
-            <End Role="Behandlung" EntitySet="BehandlungSet" />
+          <AssociationSet Name="UserZeitslot" Association="TerminvereinbarungModel.UserZeitslot">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="Zeitslot" EntitySet="ZeitslotSet" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Patient" BaseType="TerminvereinbarungModel.NamedPerson">
-          <Property Name="Telefonnummer" Type="String" Nullable="false" />
-          <Property Name="EMail" Type="String" Nullable="false" />
-          <Property Name="Krankenkasse" Type="String" Nullable="false" />
-          <Property Name="PrivatVersichert" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="bucht" Relationship="TerminvereinbarungModel.PatientBehandlung" FromRole="Patient" ToRole="Behandlung" />
-        </EntityType>
-        <EntityType Name="Behandlung">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Art" Type="String" Nullable="false" />
-          <Property Name="Dauer" Type="Time" Nullable="false" />
-          <Property Name="behandelnderArzt" Type="String" Nullable="false" />
-          <NavigationProperty Name="wirderstelltvon" Relationship="TerminvereinbarungModel.AdminBehandlung" FromRole="Behandlung" ToRole="Admin" />
-          <Property Name="ArztId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="wirdpraktiziertvon" Relationship="TerminvereinbarungModel.ArztBehandlung" FromRole="Behandlung" ToRole="Arzt" />
-          <NavigationProperty Name="wirdgebuchtvon" Relationship="TerminvereinbarungModel.PatientBehandlung" FromRole="Behandlung" ToRole="Patient" />
-        </EntityType>
-        <EntityType Name="Arzt" BaseType="TerminvereinbarungModel.NamedPerson">
-          <NavigationProperty Name="praktiziert" Relationship="TerminvereinbarungModel.ArztBehandlung" FromRole="Arzt" ToRole="Behandlung" />
-          <Property Name="Behandlungen" Type="String" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Admin" BaseType="TerminvereinbarungModel.NamedPerson">
-          <NavigationProperty Name="erstellt" Relationship="TerminvereinbarungModel.AdminBehandlung" FromRole="Admin" ToRole="Behandlung" />
-        </EntityType>
-        <EntityType Name="NamedPerson">
+        <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Vorname" Type="String" Nullable="false" />
           <Property Name="Nachname" Type="String" Nullable="false" />
+          <Property Name="Geburtsdatum" Type="String" Nullable="false" />
+          <Property Name="Telefon" Type="String" Nullable="false" />
+          <Property Name="EMail" Type="String" Nullable="false" />
+          <Property Name="Krankenkasse" Type="String" Nullable="false" />
+          <NavigationProperty Name="Behandlungungen" Relationship="TerminvereinbarungModel.Arzt" FromRole="User" ToRole="Behandlung" />
+          <Property Name="Arzt" Type="Boolean" Nullable="false" />
+          <Property Name="Admin" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="TerminArzt" Relationship="TerminvereinbarungModel.ArztTermin" FromRole="User" ToRole="Termin" />
+          <NavigationProperty Name="TerminPatient" Relationship="TerminvereinbarungModel.PatientTermin" FromRole="User" ToRole="Termin" />
+          <Property Name="Passwort" Type="String" Nullable="false" />
+          <NavigationProperty Name="BehandlungAdmin" Relationship="TerminvereinbarungModel.BehandlungAdmin" FromRole="User" ToRole="Behandlung" />
+          <NavigationProperty Name="ZeitslotAdmin" Relationship="TerminvereinbarungModel.UserZeitslot" FromRole="User" ToRole="Zeitslot" />
         </EntityType>
-        <Association Name="AdminBehandlung">
-          <End Type="TerminvereinbarungModel.Admin" Role="Admin" Multiplicity="*" />
+        <EntityType Name="Behandlung">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Ärzte" Relationship="TerminvereinbarungModel.Arzt" FromRole="Behandlung" ToRole="User" />
+          <Property Name="Behandlungart" Type="String" Nullable="false" />
+          <Property Name="Behandlungsdauer" Type="Time" Nullable="false" />
+          <NavigationProperty Name="TerminBehandlung" Relationship="TerminvereinbarungModel.BehandlungTermin" FromRole="Behandlung" ToRole="Termin" />
+          <NavigationProperty Name="Admin" Relationship="TerminvereinbarungModel.BehandlungAdmin" FromRole="Behandlung" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Termin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Arzt" Relationship="TerminvereinbarungModel.ArztTermin" FromRole="Termin" ToRole="User" />
+          <Property Name="ArztId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Patient" Relationship="TerminvereinbarungModel.PatientTermin" FromRole="Termin" ToRole="User" />
+          <Property Name="PatientId" Type="Int32" Nullable="false" />
+          <Property Name="angefragt" Type="Boolean" Nullable="false" />
+          <Property Name="bestätigt" Type="Boolean" Nullable="false" />
+          <Property Name="abgeschlossen" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Behandlung" Relationship="TerminvereinbarungModel.BehandlungTermin" FromRole="Termin" ToRole="Behandlung" />
+          <Property Name="BehandlungId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Zeitslot" Relationship="TerminvereinbarungModel.TerminZeitslot" FromRole="Termin" ToRole="Zeitslot" />
+          <Property Name="ZeitslotId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Zeitslot">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="TerminZeitslot" Relationship="TerminvereinbarungModel.TerminZeitslot" FromRole="Zeitslot" ToRole="Termin" />
+          <Property Name="Startzeitpunkt" Type="DateTime" Nullable="false" />
+          <Property Name="Dauer" Type="Time" Nullable="false" />
+          <NavigationProperty Name="Admin" Relationship="TerminvereinbarungModel.UserZeitslot" FromRole="Zeitslot" ToRole="User" />
+        </EntityType>
+        <Association Name="Arzt">
+          <End Type="TerminvereinbarungModel.User" Role="User" Multiplicity="*" />
           <End Type="TerminvereinbarungModel.Behandlung" Role="Behandlung" Multiplicity="*" />
         </Association>
-        <Association Name="ArztBehandlung">
-          <End Type="TerminvereinbarungModel.Arzt" Role="Arzt" Multiplicity="*" />
+        <Association Name="ArztTermin">
+          <End Type="TerminvereinbarungModel.User" Role="User" Multiplicity="1" />
+          <End Type="TerminvereinbarungModel.Termin" Role="Termin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Termin">
+              <PropertyRef Name="ArztId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PatientTermin">
+          <End Type="TerminvereinbarungModel.User" Role="User" Multiplicity="1" />
+          <End Type="TerminvereinbarungModel.Termin" Role="Termin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Termin">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BehandlungTermin">
+          <End Type="TerminvereinbarungModel.Behandlung" Role="Behandlung" Multiplicity="1" />
+          <End Type="TerminvereinbarungModel.Termin" Role="Termin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Behandlung">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Termin">
+              <PropertyRef Name="BehandlungId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TerminZeitslot">
+          <End Type="TerminvereinbarungModel.Termin" Role="Termin" Multiplicity="*" />
+          <End Type="TerminvereinbarungModel.Zeitslot" Role="Zeitslot" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Zeitslot">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Termin">
+              <PropertyRef Name="ZeitslotId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BehandlungAdmin">
+          <End Type="TerminvereinbarungModel.User" Role="User" Multiplicity="*" />
           <End Type="TerminvereinbarungModel.Behandlung" Role="Behandlung" Multiplicity="*" />
         </Association>
-        <Association Name="PatientBehandlung">
-          <End Type="TerminvereinbarungModel.Patient" Role="Patient" Multiplicity="*" />
-          <End Type="TerminvereinbarungModel.Behandlung" Role="Behandlung" Multiplicity="*" />
+        <Association Name="UserZeitslot">
+          <End Type="TerminvereinbarungModel.User" Role="User" Multiplicity="*" />
+          <End Type="TerminvereinbarungModel.Zeitslot" Role="Zeitslot" Multiplicity="*" />
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
-        <Alias Key="Model" Value="TerminvereinbarungModel" />
-        <Alias Key="Target" Value="TerminvereinbarungModel.Store" />
-        <EntityContainerMapping CdmEntityContainer="TerminvereinbarungModelContainer" StorageEntityContainer="TerminvereinbarungModelTargetContainer">
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TerminvereinbarungModelStoreContainer" CdmEntityContainer="TerminvereinbarungModelContainer">
+    </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -99,6 +184,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
       </DesignerInfoPropertySet>
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
