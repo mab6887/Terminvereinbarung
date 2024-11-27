@@ -20,7 +20,7 @@
             <End Role="User" EntitySet="UserSet" />
             <End Role="Behandlung" EntitySet="BehandlungSet" />
           </AssociationSet>
-          <AssociationSet Name="ArztTermin" Association="TerminvereinbarungModel.ArztTermin">
+          <AssociationSet Name="BehandelnderTermin" Association="TerminvereinbarungModel.ArztTermin">
             <End Role="User" EntitySet="UserSet" />
             <End Role="Termin" EntitySet="TerminSet" />
           </AssociationSet>
@@ -36,11 +36,7 @@
             <End Role="Termin" EntitySet="TerminSet" />
             <End Role="Zeitslot" EntitySet="ZeitslotSet" />
           </AssociationSet>
-          <AssociationSet Name="BehandlungAdmin" Association="TerminvereinbarungModel.BehandlungAdmin">
-            <End Role="User" EntitySet="UserSet" />
-            <End Role="Behandlung" EntitySet="BehandlungSet" />
-          </AssociationSet>
-          <AssociationSet Name="UserZeitslot" Association="TerminvereinbarungModel.UserZeitslot">
+          <AssociationSet Name="ArztZeitslot" Association="TerminvereinbarungModel.ArztZeitslot">
             <End Role="User" EntitySet="UserSet" />
             <End Role="Zeitslot" EntitySet="ZeitslotSet" />
           </AssociationSet>
@@ -62,19 +58,17 @@
           <NavigationProperty Name="TerminArzt" Relationship="TerminvereinbarungModel.ArztTermin" FromRole="User" ToRole="Termin" />
           <NavigationProperty Name="TerminPatient" Relationship="TerminvereinbarungModel.PatientTermin" FromRole="User" ToRole="Termin" />
           <Property Name="Passwort" Type="String" Nullable="false" />
-          <NavigationProperty Name="BehandlungAdmin" Relationship="TerminvereinbarungModel.BehandlungAdmin" FromRole="User" ToRole="Behandlung" />
-          <NavigationProperty Name="ZeitslotAdmin" Relationship="TerminvereinbarungModel.UserZeitslot" FromRole="User" ToRole="Zeitslot" />
+          <NavigationProperty Name="ZeitslotArzt" Relationship="TerminvereinbarungModel.ArztZeitslot" FromRole="User" ToRole="Zeitslot" />
         </EntityType>
         <EntityType Name="Behandlung">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Ärzte" Relationship="TerminvereinbarungModel.Arzt" FromRole="Behandlung" ToRole="User" />
+          <NavigationProperty Name="qualifizierteÄrzte" Relationship="TerminvereinbarungModel.Arzt" FromRole="Behandlung" ToRole="User" />
           <Property Name="Behandlungart" Type="String" Nullable="false" />
           <Property Name="Behandlungsdauer" Type="Time" Nullable="false" />
           <NavigationProperty Name="TerminBehandlung" Relationship="TerminvereinbarungModel.BehandlungTermin" FromRole="Behandlung" ToRole="Termin" />
-          <NavigationProperty Name="Admin" Relationship="TerminvereinbarungModel.BehandlungAdmin" FromRole="Behandlung" ToRole="User" />
         </EntityType>
         <EntityType Name="Termin">
           <Key>
@@ -101,7 +95,7 @@
           <NavigationProperty Name="TerminZeitslot" Relationship="TerminvereinbarungModel.TerminZeitslot" FromRole="Zeitslot" ToRole="Termin" />
           <Property Name="Startzeitpunkt" Type="DateTime" Nullable="false" />
           <Property Name="Dauer" Type="Time" Nullable="false" />
-          <NavigationProperty Name="Admin" Relationship="TerminvereinbarungModel.UserZeitslot" FromRole="Zeitslot" ToRole="User" />
+          <NavigationProperty Name="verfügbareÄrzte" Relationship="TerminvereinbarungModel.ArztZeitslot" FromRole="Zeitslot" ToRole="User" />
         </EntityType>
         <Association Name="Arzt">
           <End Type="TerminvereinbarungModel.User" Role="User" Multiplicity="*" />
@@ -155,11 +149,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="BehandlungAdmin">
-          <End Type="TerminvereinbarungModel.User" Role="User" Multiplicity="*" />
-          <End Type="TerminvereinbarungModel.Behandlung" Role="Behandlung" Multiplicity="*" />
-        </Association>
-        <Association Name="UserZeitslot">
+        <Association Name="ArztZeitslot">
           <End Type="TerminvereinbarungModel.User" Role="User" Multiplicity="*" />
           <End Type="TerminvereinbarungModel.Zeitslot" Role="Zeitslot" Multiplicity="*" />
         </Association>

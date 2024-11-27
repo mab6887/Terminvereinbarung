@@ -20,8 +20,7 @@ namespace TerminvereinbarungLib
             this.Behandlungungen = new HashSet<Behandlung>();
             this.TerminArzt = new HashSet<Termin>();
             this.TerminPatient = new HashSet<Termin>();
-            this.BehandlungAdmin = new HashSet<Behandlung>();
-            this.ZeitslotAdmin = new HashSet<Zeitslot>();
+            this.ZeitslotArzt = new HashSet<Zeitslot>();
         }
     
         public int Id { get; set; }
@@ -42,8 +41,6 @@ namespace TerminvereinbarungLib
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Termin> TerminPatient { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Behandlung> BehandlungAdmin { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Zeitslot> ZeitslotAdmin { get; set; }
+        public virtual ICollection<Zeitslot> ZeitslotArzt { get; set; }
     }
 }

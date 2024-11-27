@@ -18,7 +18,7 @@ namespace TerminvereinbarungLib
         public Zeitslot()
         {
             this.TerminZeitslot = new HashSet<Termin>();
-            this.Admin = new HashSet<User>();
+            this.verfügbareÄrzte = new HashSet<User>();
         }
     
         public int Id { get; set; }
@@ -28,6 +28,6 @@ namespace TerminvereinbarungLib
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Termin> TerminZeitslot { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Admin { get; set; }
+        public virtual ICollection<User> verfügbareÄrzte { get; set; }
     }
 }

@@ -17,9 +17,8 @@ namespace TerminvereinbarungLib
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Behandlung()
         {
-            this.Ärzte = new HashSet<User>();
+            this.qualifizierteÄrzte = new HashSet<User>();
             this.TerminBehandlung = new HashSet<Termin>();
-            this.Admin = new HashSet<User>();
         }
     
         public int Id { get; set; }
@@ -27,10 +26,8 @@ namespace TerminvereinbarungLib
         public System.TimeSpan Behandlungsdauer { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Ärzte { get; set; }
+        public virtual ICollection<User> qualifizierteÄrzte { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Termin> TerminBehandlung { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Admin { get; set; }
     }
 }

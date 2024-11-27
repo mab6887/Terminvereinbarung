@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="cea40610053e4f02a7fee285fc05b055" Name="Diagram1" ZoomLevel="99" >
+      <Diagram DiagramId="cea40610053e4f02a7fee285fc05b055" Name="Diagram1" ZoomLevel="74" >
         <EntityTypeShape EntityType="TerminvereinbarungModel.User" Width="1.5" PointX="0.5" PointY="0.875" />
         <EntityTypeShape EntityType="TerminvereinbarungModel.Behandlung" Width="1.5" PointX="4.75" PointY="1" />
         <EntityTypeShape EntityType="TerminvereinbarungModel.Termin" Width="1.5" PointX="4.75" PointY="5" />
@@ -14,8 +14,7 @@
         <AssociationConnector Association="TerminvereinbarungModel.PatientTermin" />
         <AssociationConnector Association="TerminvereinbarungModel.BehandlungTermin" />
         <AssociationConnector Association="TerminvereinbarungModel.TerminZeitslot" />
-        <AssociationConnector Association="TerminvereinbarungModel.BehandlungAdmin" />
-        <AssociationConnector Association="TerminvereinbarungModel.UserZeitslot" />
+        <AssociationConnector Association="TerminvereinbarungModel.ArztZeitslot" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
