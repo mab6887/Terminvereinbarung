@@ -6,8 +6,202 @@
     <edmx:StorageModels>
     <Schema Namespace="TerminvereinbarungModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="TerminvereinbarungModelStoreContainer">
-    </EntityContainer>
-  </Schema></edmx:StorageModels>
+    <EntitySet Name="UserSet" EntityType="TerminvereinbarungModel.Store.UserSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BehandlungSet" EntityType="TerminvereinbarungModel.Store.BehandlungSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TerminSet" EntityType="TerminvereinbarungModel.Store.TerminSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ZeitslotSet" EntityType="TerminvereinbarungModel.Store.ZeitslotSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Arzt" EntityType="TerminvereinbarungModel.Store.Arzt" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ArztZeitslot" EntityType="TerminvereinbarungModel.Store.ArztZeitslot" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Arzt_User" Association="TerminvereinbarungModel.Store.FK_Arzt_User">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="Arzt" EntitySet="Arzt" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Arzt_Behandlung" Association="TerminvereinbarungModel.Store.FK_Arzt_Behandlung">
+      <End Role="Behandlung" EntitySet="BehandlungSet" />
+      <End Role="Arzt" EntitySet="Arzt" />
+    </AssociationSet>
+    <AssociationSet Name="BehandelnderTermin" Association="TerminvereinbarungModel.Store.ArztTermin">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="Termin" EntitySet="TerminSet" />
+    </AssociationSet>
+    <AssociationSet Name="PatientTermin" Association="TerminvereinbarungModel.Store.PatientTermin">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="Termin" EntitySet="TerminSet" />
+    </AssociationSet>
+    <AssociationSet Name="BehandlungTermin" Association="TerminvereinbarungModel.Store.BehandlungTermin">
+      <End Role="Behandlung" EntitySet="BehandlungSet" />
+      <End Role="Termin" EntitySet="TerminSet" />
+    </AssociationSet>
+    <AssociationSet Name="TerminZeitslot" Association="TerminvereinbarungModel.Store.TerminZeitslot">
+      <End Role="Termin" EntitySet="TerminSet" />
+      <End Role="Zeitslot" EntitySet="ZeitslotSet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArztZeitslot_User" Association="TerminvereinbarungModel.Store.FK_ArztZeitslot_User">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="ArztZeitslot" EntitySet="ArztZeitslot" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArztZeitslot_Zeitslot" Association="TerminvereinbarungModel.Store.FK_ArztZeitslot_Zeitslot">
+      <End Role="Zeitslot" EntitySet="ZeitslotSet" />
+      <End Role="ArztZeitslot" EntitySet="ArztZeitslot" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="UserSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Vorname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Nachname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Geburtsdatum" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Telefon" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="EMail" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Krankenkasse" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Arzt" Type="bit" Nullable="false" />
+    <Property Name="Admin" Type="bit" Nullable="false" />
+    <Property Name="Passwort" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BehandlungSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Behandlungart" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Behandlungsdauer" Type="time" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TerminSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ArztId" Type="int" Nullable="false" />
+    <Property Name="PatientId" Type="int" Nullable="false" />
+    <Property Name="angefragt" Type="bit" Nullable="false" />
+    <Property Name="bestätigt" Type="bit" Nullable="false" />
+    <Property Name="abgeschlossen" Type="bit" Nullable="false" />
+    <Property Name="BehandlungId" Type="int" Nullable="false" />
+    <Property Name="ZeitslotId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ZeitslotSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Startzeitpunkt" Type="datetime" Nullable="false" />
+    <Property Name="Dauer" Type="time" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Arzt">
+    <Key>
+      <PropertyRef Name="qualifizierteÄrzte_Id" />
+      <PropertyRef Name="Behandlungungen_Id" />
+    </Key>
+    <Property Name="qualifizierteÄrzte_Id" Type="int" Nullable="false" />
+    <Property Name="Behandlungungen_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ArztZeitslot">
+    <Key>
+      <PropertyRef Name="verfügbareÄrzte_Id" />
+      <PropertyRef Name="ZeitslotArzt_Id" />
+    </Key>
+    <Property Name="verfügbareÄrzte_Id" Type="int" Nullable="false" />
+    <Property Name="ZeitslotArzt_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="ArztTermin">
+    <End Role="User" Type="TerminvereinbarungModel.Store.UserSet" Multiplicity="1" />
+    <End Role="Termin" Type="TerminvereinbarungModel.Store.TerminSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Termin">
+        <PropertyRef Name="ArztId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PatientTermin">
+    <End Role="User" Type="TerminvereinbarungModel.Store.UserSet" Multiplicity="1" />
+    <End Role="Termin" Type="TerminvereinbarungModel.Store.TerminSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Termin">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="BehandlungTermin">
+    <End Role="Behandlung" Type="TerminvereinbarungModel.Store.BehandlungSet" Multiplicity="1" />
+    <End Role="Termin" Type="TerminvereinbarungModel.Store.TerminSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Behandlung">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Termin">
+        <PropertyRef Name="BehandlungId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TerminZeitslot">
+    <End Role="Termin" Type="TerminvereinbarungModel.Store.TerminSet" Multiplicity="*" />
+    <End Role="Zeitslot" Type="TerminvereinbarungModel.Store.ZeitslotSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Zeitslot">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Termin">
+        <PropertyRef Name="ZeitslotId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Arzt_User">
+    <End Role="User" Type="TerminvereinbarungModel.Store.UserSet" Multiplicity="1" />
+    <End Role="Arzt" Type="TerminvereinbarungModel.Store.Arzt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Arzt">
+        <PropertyRef Name="qualifizierteÄrzte_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Arzt_Behandlung">
+    <End Role="Arzt" Type="TerminvereinbarungModel.Store.Arzt" Multiplicity="*" />
+    <End Role="Behandlung" Type="TerminvereinbarungModel.Store.BehandlungSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Behandlung">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Arzt">
+        <PropertyRef Name="Behandlungungen_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArztZeitslot_User">
+    <End Role="User" Type="TerminvereinbarungModel.Store.UserSet" Multiplicity="1" />
+    <End Role="ArztZeitslot" Type="TerminvereinbarungModel.Store.ArztZeitslot" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ArztZeitslot">
+        <PropertyRef Name="verfügbareÄrzte_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArztZeitslot_Zeitslot">
+    <End Role="ArztZeitslot" Type="TerminvereinbarungModel.Store.ArztZeitslot" Multiplicity="*" />
+    <End Role="Zeitslot" Type="TerminvereinbarungModel.Store.ZeitslotSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Zeitslot">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ArztZeitslot">
+        <PropertyRef Name="ZeitslotArzt_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="TerminvereinbarungModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
@@ -51,7 +245,7 @@
           <Property Name="Geburtsdatum" Type="String" Nullable="false" />
           <Property Name="Telefon" Type="String" Nullable="false" />
           <Property Name="EMail" Type="String" Nullable="false" />
-          <Property Name="Krankenkasse" Type="String" Nullable="false" />
+          <Property Name="Krankenkasse" Type="String" Nullable="true" />
           <NavigationProperty Name="Behandlungungen" Relationship="TerminvereinbarungModel.Arzt" FromRole="User" ToRole="Behandlung" />
           <Property Name="Arzt" Type="Boolean" Nullable="false" />
           <Property Name="Admin" Type="Boolean" Nullable="false" />
@@ -159,7 +353,71 @@
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="TerminvereinbarungModelStoreContainer" CdmEntityContainer="TerminvereinbarungModelContainer">
-    </EntityContainerMapping>
+    <EntitySetMapping Name="UserSet">
+      <EntityTypeMapping TypeName="IsTypeOf(TerminvereinbarungModel.User)">
+        <MappingFragment StoreEntitySet="UserSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Vorname" ColumnName="Vorname" />
+          <ScalarProperty Name="Nachname" ColumnName="Nachname" />
+          <ScalarProperty Name="Geburtsdatum" ColumnName="Geburtsdatum" />
+          <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+          <ScalarProperty Name="EMail" ColumnName="EMail" />
+          <ScalarProperty Name="Krankenkasse" ColumnName="Krankenkasse" />
+          <ScalarProperty Name="Arzt" ColumnName="Arzt" />
+          <ScalarProperty Name="Admin" ColumnName="Admin" />
+          <ScalarProperty Name="Passwort" ColumnName="Passwort" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BehandlungSet">
+      <EntityTypeMapping TypeName="IsTypeOf(TerminvereinbarungModel.Behandlung)">
+        <MappingFragment StoreEntitySet="BehandlungSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Behandlungart" ColumnName="Behandlungart" />
+          <ScalarProperty Name="Behandlungsdauer" ColumnName="Behandlungsdauer" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TerminSet">
+      <EntityTypeMapping TypeName="IsTypeOf(TerminvereinbarungModel.Termin)">
+        <MappingFragment StoreEntitySet="TerminSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ArztId" ColumnName="ArztId" />
+          <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+          <ScalarProperty Name="angefragt" ColumnName="angefragt" />
+          <ScalarProperty Name="bestätigt" ColumnName="bestätigt" />
+          <ScalarProperty Name="abgeschlossen" ColumnName="abgeschlossen" />
+          <ScalarProperty Name="BehandlungId" ColumnName="BehandlungId" />
+          <ScalarProperty Name="ZeitslotId" ColumnName="ZeitslotId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ZeitslotSet">
+      <EntityTypeMapping TypeName="IsTypeOf(TerminvereinbarungModel.Zeitslot)">
+        <MappingFragment StoreEntitySet="ZeitslotSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Startzeitpunkt" ColumnName="Startzeitpunkt" />
+          <ScalarProperty Name="Dauer" ColumnName="Dauer" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="Arzt" TypeName="TerminvereinbarungModel.Arzt" StoreEntitySet="Arzt">
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="qualifizierteÄrzte_Id" />
+      </EndProperty>
+      <EndProperty Name="Behandlung">
+        <ScalarProperty Name="Id" ColumnName="Behandlungungen_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ArztZeitslot" TypeName="TerminvereinbarungModel.ArztZeitslot" StoreEntitySet="ArztZeitslot">
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="verfügbareÄrzte_Id" />
+      </EndProperty>
+      <EndProperty Name="Zeitslot">
+        <ScalarProperty Name="Id" ColumnName="ZeitslotArzt_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
