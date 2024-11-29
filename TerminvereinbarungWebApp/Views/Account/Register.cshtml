@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+}
+
+
+@model TerminvereinbarungWebApp.Models.Register
+
+<h2>Register</h2>
+@using (Html.BeginForm("Register", "Account", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div>
+        @Html.LabelFor(m => m.Vorname)
+        @Html.TextBoxFor(m => m.Vorname, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Vorname)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Nachname)
+        @Html.TextBoxFor(m => m.Nachname, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Nachname)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Geburtsdatum)
+        @Html.TextBoxFor(m => m.Geburtsdatum, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Geburtsdatum)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Telefon)
+        @Html.TextBoxFor(m => m.Telefon, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Telefon)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.EMail)
+        @Html.TextBoxFor(m => m.EMail, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.EMail)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Krankenkasse)
+        @Html.TextBoxFor(m => m.Krankenkasse, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Nachname)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Passwort)
+        @Html.PasswordFor(m => m.Passwort, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Passwort)
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Register</button>
+    <button type="button" class="btn btn-primary">zum Loginbereich</button>
+    <li>@Html.ActionLink("Loginbereich", "Login", "Account")</li>
+
+        @Html.ActionLink("Button", "ActionName", "ControllerName", null, new { @class = "btn btn-primary" })
+<br />
+<h5>Klicken Sie auf den Login-Button,falls Sie bereits registriert sind.</h5>
+
+
+}

@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+
+
+@model TerminvereinbarungWebApp.Models.Login
+
+<h2>Login</h2>
+@using (Html.BeginForm("Login", "Account", FormMethod.Post))
+{
+@Html.AntiForgeryToken()
+                <div>
+                    @Html.LabelFor(m => m.EMail)
+                    @Html.TextBoxFor(m => m.EMail, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.EMail)
+                </div>
+                                <div>
+                                    @Html.LabelFor(m => m.Passwort)
+                                    @Html.PasswordFor(m => m.Passwort, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Passwort)
+                                </div>
+                                <br />
+                               
+                                                <button type="submit" class="btn btn-primary">Login</button>}
