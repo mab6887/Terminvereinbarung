@@ -13,7 +13,7 @@ namespace TerminvereinbarungApplication
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -198,8 +198,8 @@ namespace TerminvereinbarungApplication
             {
                 Vorname = "Edwin",
                 Nachname = "Bubble",
-                Geburtsdatum = "10.12.1815",
-                Telefon = "015 35792493",
+                Geburtsdatum = "11.12.1842",
+                Telefon = "015 5923493",
                 EMail = "edwin.bubble@gmx.de",
                 Krankenkasse = "DAK",
                 Arzt = false,
@@ -288,7 +288,7 @@ namespace TerminvereinbarungApplication
             }
             
 
-
+            ultraschall.qualifizierteÄrzte.Add(drSchlingenbein);
 
 
         }

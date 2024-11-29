@@ -56,6 +56,10 @@
     <Compile Include="Behandlung.cs">
       <DependentUpon>TerminvereinbarungModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\Behandlung.cs" />
+    <Compile Include="Extensions\Termin.cs" />
+    <Compile Include="Extensions\Zeitslot.cs" />
+    <Compile Include="Extensions\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Termin.cs">
       <DependentUpon>TerminvereinbarungModel.tt</DependentUpon>
