@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 11/28/2024 17:53:56
+-- Date Created: 12/04/2024 13:01:46
 -- Generated from EDMX file: C:\Users\marco_p\source\repos\Terminvereinbarung\TerminvereinbarungLib\TerminvereinbarungModel.edmx
 -- --------------------------------------------------
 
