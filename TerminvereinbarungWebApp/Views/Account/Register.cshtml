@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Register";
 }
 
@@ -47,12 +46,13 @@
     </div>
     <br />
     <button type="submit" class="btn btn-primary">Register</button>
-    <button type="button" class="btn btn-primary">zum Loginbereich</button>
-    <li>@Html.ActionLink("Loginbereich", "Login", "Account")</li>
 
-        @Html.ActionLink("Button", "ActionName", "ControllerName", null, new { @class = "btn btn-primary" })
-<br />
-<h5>Klicken Sie auf den Login-Button,falls Sie bereits registriert sind.</h5>
+
+    @Html.ActionLink("zum Loginbereich", "Login", "Account", null, new { @class = "btn btn-primary" })
+    <br />
+
+
+    <h5>Klicken Sie auf "zum Loginbereich", falls Sie bereits registriert sind.</h5>
 
 
 }

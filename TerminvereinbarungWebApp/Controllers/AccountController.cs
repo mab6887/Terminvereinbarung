@@ -36,8 +36,29 @@ namespace TerminvereinbarungWebApp.Controllers
                     Session["UserId"] = user.Id;
                     Session["UserName"] = user.Nachname;
                     // Hier if um verschiedene rollen zuzuweisen und basierend auf rolle unterschiedliche views
-                    return RedirectToAction("Index", "Home");
+                    if (user.Passwort == "superior")
+                    {
+                        user.Admin = true;
+                    }
+                    else
+                   if (user.Passwort == "biologie")
+                    {
+                        user.Arzt = true;
+                    }
+
+
+
+                    if (user.Admin)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else if (user.Arzt)
+                    {
+                        return RedirectToAction("Index", "Arzt");
+                    }
+                    else return RedirectToAction("Index", "Home");
                 }
+
 
                 ModelState.AddModelError("", "Invalid email or password.");
             }

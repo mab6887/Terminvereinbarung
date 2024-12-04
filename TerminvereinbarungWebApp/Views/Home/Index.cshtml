@@ -2,20 +2,38 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
+<!-- <div class="jumbotron">
     <h1>ASP.NET</h1>
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
     <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
 </div>
-
+    -->
 <div class="row">
     <div class="col-md-3">
         <h2>Behandlung</h2>
         @Html.ActionLink("List...", actionName: "Index", controllerName: "Behandlungs") <br /> @Html.ActionLink("Create...", actionName: "Create", controllerName: "Behandlungs")
     </div>
 </div>
+<div class="row">
+    <div class="col-md-3">
+        <h2>User</h2>
+        @Html.ActionLink("List...", actionName: "Index", controllerName: "Users") <br /> @Html.ActionLink("Create...", actionName: "Create", controllerName: "Users")
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <h2>Zeitslot</h2>
+        @Html.ActionLink("List...", actionName: "Index", controllerName: "Zeitslots") <br /> @Html.ActionLink("Create...", actionName: "Create", controllerName: "Zeitslots")
+    </div>
+</div>
 
 <div class="row">
+    <div class="col-md-3">
+        <h2>Termin</h2>
+        @Html.ActionLink("List...", actionName: "Index", controllerName: "Termins") <br /> @Html.ActionLink("Create...", actionName: "Create", controllerName: "Terimins")
+    </div>
+</div>
+<!-- This is the original code from the Home/Index.cshtml file <div class="row">
     <div class="col-md-4">
         <h2>Getting started</h2>
         <p>
@@ -36,3 +54,4 @@
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
     </div>
 </div>
+    -->
