@@ -54,9 +54,9 @@ namespace TerminvereinbarungWebApp.Controllers
                     }
                     else if (user.Arzt)
                     {
-                        return RedirectToAction("Index", "Arzt");
+                        return RedirectToAction("Create", "Termins");
                     }
-                    else return RedirectToAction("Index", "Home");
+                    else return RedirectToAction("Behandlungsauswahl", "Termins");
                 }
 
 
