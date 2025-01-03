@@ -137,6 +137,7 @@
     </Compile>
     <Compile Include="Models\Register.cs" />
     <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\Termin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -197,6 +198,14 @@
     <Content Include="Views\Zeitslots\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Termin\Create.cshtml" />
+    <Content Include="Views\Termin\Delete.cshtml" />
+    <Content Include="Views\Termin\Details.cshtml" />
+    <Content Include="Views\Termin\Edit.cshtml" />
+    <Content Include="Views\Termin\Index.cshtml" />
+    <Content Include="Views\Termin\Behandlungsauswahl.cshtml" />
+    <Content Include="Views\Termin\Zeitslotauswahl.cshtml" />
+    <Content Include="Views\Termin\Arztauswahl.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
