@@ -39,10 +39,10 @@ namespace TerminvereinbarungWebApp.Controllers
         // GET: Termins/Create
         public ActionResult Create()
         {
-            ViewBag.ArztId = new SelectList(db.UserSet, "Id", "Vorname");
-            ViewBag.PatientId = new SelectList(db.UserSet, "Id", "Vorname");
+            ViewBag.ArztId = new SelectList(db.UserSet.Where(u => u.Arzt), "Id", "Nachname");
+            ViewBag.PatientId = new SelectList(db.UserSet, "Id", "Vorname" );
             ViewBag.BehandlungId = new SelectList(db.BehandlungSet, "Id", "Behandlungart");
-            ViewBag.ZeitslotId = new SelectList(db.ZeitslotSet, "Id", "Id");
+            ViewBag.ZeitslotId = new SelectList(db.ZeitslotSet, "Id", "Startzeitpunkt");
             return View();
         }
 

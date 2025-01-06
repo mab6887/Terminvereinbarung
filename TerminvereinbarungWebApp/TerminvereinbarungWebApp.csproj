@@ -197,11 +197,6 @@
     <Content Include="Views\Zeitslots\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Termin\Create.cshtml" />
-    <Content Include="Views\Termin\Delete.cshtml" />
-    <Content Include="Views\Termin\Details.cshtml" />
-    <Content Include="Views\Termin\Edit.cshtml" />
-    <Content Include="Views\Termin\Index.cshtml" />
     <Content Include="Views\Termins\Behandlungsauswahl.cshtml" />
     <Content Include="Views\Termins\Zeitslotauswahl.cshtml" />
     <Content Include="Views\Termins\Arztauswahl.cshtml" />
