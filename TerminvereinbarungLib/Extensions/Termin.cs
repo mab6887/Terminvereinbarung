@@ -8,7 +8,7 @@ namespace TerminvereinbarungLib
 {
     public partial class Termin
     {
-        public Termin(int ArztId, int PatientId, bool angefragt, bool bestätigt, bool abgeschlossen, int BehandlungId, int ZeitslotId ) { 
+      /*  public Termin(int ArztId, int PatientId, bool angefragt, bool bestätigt, bool abgeschlossen, int BehandlungId, int ZeitslotId ) { 
             this.ArztId = ArztId;
             this.PatientId = PatientId;
             this.angefragt = angefragt;
@@ -18,6 +18,6 @@ namespace TerminvereinbarungLib
             this.ZeitslotId = ZeitslotId;
 
 
-        }
+        } */
     }
 }
