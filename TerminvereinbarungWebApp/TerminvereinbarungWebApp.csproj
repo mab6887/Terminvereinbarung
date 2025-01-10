@@ -201,6 +201,8 @@
     <Content Include="Views\Termins\Zeitslotauswahl.cshtml" />
     <Content Include="Views\Termins\Arztauswahl.cshtml" />
     <Content Include="Views\Termins\Terminbestätigung.cshtml" />
+    <Content Include="Views\Termins\IndexArzt.cshtml" />
+    <Content Include="Views\Termins\CreateArzt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

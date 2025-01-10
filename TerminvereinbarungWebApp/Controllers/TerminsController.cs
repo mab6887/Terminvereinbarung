@@ -26,6 +26,16 @@ namespace TerminvereinbarungWebApp.Controllers
     return View(terminSet.ToList());
 }
 
+        public ActionResult IndexArzt()
+        {
+            var terminSet = db.TerminSet.Include(t => t.Arzt)
+                                        .Include(t => t.Patient)
+                                        .Include(t => t.Behandlung)
+                                        .Include(t => t.Zeitslot)
+                                        .OrderBy(t => t.Zeitslot.Startzeitpunkt); // Sort by Startzeitpunkt
+            return View(terminSet.ToList());
+        }
+
         // GET: Termins/Details/5
         public ActionResult Details(int? id)
         {
@@ -46,6 +56,14 @@ namespace TerminvereinbarungWebApp.Controllers
         {
             ViewBag.ArztId = new SelectList(db.UserSet.Where(u => u.Arzt), "Id", "Nachname");
             ViewBag.PatientId = new SelectList(db.UserSet, "Id", "Vorname" );
+            ViewBag.BehandlungId = new SelectList(db.BehandlungSet, "Id", "Behandlungart");
+            ViewBag.ZeitslotId = new SelectList(db.ZeitslotSet, "Id", "Startzeitpunkt");
+            return View();
+        }
+        public ActionResult CreateArzt()
+        {
+            ViewBag.ArztId = new SelectList(db.UserSet.Where(u => u.Arzt), "Id", "Nachname");
+            ViewBag.PatientId = new SelectList(db.UserSet, "Id", "Vorname");
             ViewBag.BehandlungId = new SelectList(db.BehandlungSet, "Id", "Behandlungart");
             ViewBag.ZeitslotId = new SelectList(db.ZeitslotSet, "Id", "Startzeitpunkt");
             return View();
@@ -71,6 +89,26 @@ namespace TerminvereinbarungWebApp.Controllers
             ViewBag.ZeitslotId = new SelectList(db.ZeitslotSet, "Id", "Id", termin.ZeitslotId);
             return View(termin);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateArzt([Bind(Include = "Id,ArztId,PatientId,angefragt,bestätigt,abgeschlossen,BehandlungId,ZeitslotId")] Termin termin)
+        {
+            if (ModelState.IsValid)
+            {
+                db.TerminSet.Add(termin);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.ArztId = new SelectList(db.UserSet, "Id", "Vorname", termin.ArztId);
+            ViewBag.PatientId = new SelectList(db.UserSet, "Id", "Vorname", termin.PatientId);
+            ViewBag.BehandlungId = new SelectList(db.BehandlungSet, "Id", "Behandlungart", termin.BehandlungId);
+            ViewBag.ZeitslotId = new SelectList(db.ZeitslotSet, "Id", "Id", termin.ZeitslotId);
+            return View(termin);
+        }
+
+
+
 
         // GET: Termins/Edit/5
         public ActionResult Edit(int? id)

@@ -1,0 +1,77 @@
+﻿@model IEnumerable<TerminvereinbarungLib.Termin>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Anstehende Termine</h2>
+
+<p>
+    @Html.ActionLink("neuen Termin erstellen", "CreateArzt")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Startzeitpunktt
+        </th>
+        <th>
+            Arzt
+        </th>
+        <th>
+            Patient
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Behandlung.Behandlungart)
+        </th>
+        <th>
+            Behandlungsdauer
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.angefragt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.bestätigt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.abgeschlossen)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Zeitslot.Startzeitpunkt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Arzt.Nachname) @Html.DisplayFor(modelItem => item.Arzt.Vorname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Patient.Nachname) @Html.DisplayFor(modelItem => item.Patient.Vorname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Behandlung.Behandlungart)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Behandlung.Behandlungsdauer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.angefragt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.bestätigt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.abgeschlossen)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+           
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+
+    </tr>
+}
+
+</table>
+
