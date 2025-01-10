@@ -85,24 +85,126 @@ namespace TerminvereinbarungWebApp.Controllers
             ViewBag.ZeitslotId = new SelectList(db.ZeitslotSet, "Id", "Id", termin.ZeitslotId);
             return View(termin);
         }
+
         public ActionResult Behandlungsauswahl()
         {
-
             ViewBag.BehandlungId = new SelectList(db.BehandlungSet, "Id", "Behandlungart");
             return View();
         }
-        
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Behandlungsauswahl([Bind(Include = "BehandlungId")] Termin termin)
+        {
+            if (ModelState.IsValid)
+            {
+                // Create a new Termin object with the selected BehandlungId
+                var newTermin = new Termin
+                {
+                    BehandlungId = termin.BehandlungId,
+                    // Set default values for other properties
+                    ArztId = 1,
+                    PatientId = 1,
+                    angefragt = false,
+                    bestätigt = false,
+                    abgeschlossen = false,
+                    ZeitslotId = 7
+                };
+
+                // Add the new Termin to the database
+                db.TerminSet.Add(newTermin);
+                db.SaveChanges();
+
+                // Redirect to the next step (e.g., Arztauswahl)
+                return RedirectToAction("Arztauswahl", new { id = newTermin.Id });
+            }
+
+            ViewBag.BehandlungId = new SelectList(db.BehandlungSet, "Id", "Behandlungart", termin.BehandlungId);
+            return View(termin);
+        }
         public ActionResult Arztauswahl()
         {
             ViewBag.ArztId = new SelectList(db.UserSet.Where(u => u.Arzt), "Id", "Nachname");
             return View();
         }
-        
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Arztauswahl([Bind(Include = "ArztId")] Termin termin)
+        {
+            if (ModelState.IsValid)
+            {
+                // Find the Termin with the biggest Id
+                var existingTermin = db.TerminSet.OrderByDescending(t => t.Id).FirstOrDefault();
+                if (existingTermin != null)
+                {
+                    // Update the existing Termin with the new values
+                    
+                    existingTermin.ArztId = termin.ArztId;
+                    
+
+                    // Save changes to the database
+                    db.Entry(existingTermin).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    // Redirect to the next step (e.g., Zeitslotauswahl)
+                    return RedirectToAction("Zeitslotauswahl", new { id = existingTermin.Id });
+                }
+                else
+                {
+                    // Handle the case where no Termin exists
+                    ModelState.AddModelError("", "No existing Termin found to update.");
+                }
+            }
+
+            ViewBag.BehandlungId = new SelectList(db.BehandlungSet, "Id", "Behandlungart", termin.BehandlungId);
+            return View(termin);
+        }
+
+
+
         public ActionResult Zeitslotauswahl()
         {
             ViewBag.ZeitslotId = new SelectList(db.ZeitslotSet, "Id", "Startzeitpunkt");
             return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Zeitslotauswahl([Bind(Include = "ZeitslotId")] Termin termin)
+        {
+            if (ModelState.IsValid)
+            {
+                // Find the Termin with the biggest Id
+                var existingTermin = db.TerminSet.OrderByDescending(t => t.Id).FirstOrDefault();
+                if (existingTermin != null)
+                {
+                    // Update the existing Termin with the new values
+
+                    existingTermin.ZeitslotId = termin.ZeitslotId;
+
+
+                    // Save changes to the database
+                    db.Entry(existingTermin).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    // Redirect to the next step (e.g., Zeitslotauswahl)
+                    return RedirectToAction("Register","Account", new { id = existingTermin.Id });
+                }
+                else
+                {
+                    // Handle the case where no Termin exists
+                    ModelState.AddModelError("", "No existing Termin found to update.");
+                }
+            }
+
+            ViewBag.BehandlungId = new SelectList(db.BehandlungSet, "Id", "Behandlungart", termin.BehandlungId);
+            return View(termin);
+        }
+
+
+
+
         // POST: Termins/Edit/5
         // Aktivieren Sie zum Schutz vor Angriffen durch Overposting die jeweiligen Eigenschaften, mit denen eine Bindung erfolgen soll. Weitere Informationen 
         // finden Sie unter https://go.microsoft.com/fwlink/?LinkId=317598.
