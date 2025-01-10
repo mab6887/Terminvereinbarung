@@ -18,9 +18,13 @@ namespace TerminvereinbarungWebApp.Controllers
         // GET: Termins
         public ActionResult Index()
         {
-            var terminSet = db.TerminSet.Include(t => t.Arzt).Include(t => t.Patient).Include(t => t.Behandlung).Include(t => t.Zeitslot);
-            return View(terminSet.ToList());
-        }
+    var terminSet = db.TerminSet.Include(t => t.Arzt)
+                                .Include(t => t.Patient)
+                                .Include(t => t.Behandlung)
+                                .Include(t => t.Zeitslot)
+                                .OrderBy(t => t.Zeitslot.Startzeitpunkt); // Sort by Startzeitpunkt
+    return View(terminSet.ToList());
+}
 
         // GET: Termins/Details/5
         public ActionResult Details(int? id)
