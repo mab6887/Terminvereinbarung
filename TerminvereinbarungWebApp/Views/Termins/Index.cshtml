@@ -12,6 +12,21 @@
 <table class="table">
     <tr>
         <th>
+            Startzeitpunktt
+        </th>
+        <th>
+            Arzt
+        </th>
+        <th>
+            Patient
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Behandlung.Behandlungart)
+        </th>
+        <th>
+            Behandlungsdauer
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.angefragt)
         </th>
         <th>
@@ -20,23 +35,26 @@
         <th>
             @Html.DisplayNameFor(model => model.abgeschlossen)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Arzt.Vorname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Patient.Vorname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Behandlung.Behandlungart)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Zeitslot.Id)
-        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Zeitslot.Startzeitpunkt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Arzt.Nachname) @Html.DisplayFor(modelItem => item.Arzt.Vorname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Patient.Nachname) @Html.DisplayFor(modelItem => item.Patient.Vorname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Behandlung.Behandlungart)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Behandlung.Behandlungsdauer)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.angefragt)
         </td>
@@ -47,23 +65,16 @@
             @Html.DisplayFor(modelItem => item.abgeschlossen)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Arzt.Vorname)
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Patient.Vorname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Behandlung.Behandlungart)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Zeitslot.Id)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
+
     </tr>
 }
 
 </table>
+
+<div>
+    @Html.ActionLink("Back to Admin-Startpage", "Index", "Home")
+</div>
