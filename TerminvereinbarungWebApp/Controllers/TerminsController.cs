@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using TerminvereinbarungLib;
 
+
 namespace TerminvereinbarungWebApp.Controllers
 {
     public class TerminsController : Controller
@@ -96,27 +97,26 @@ namespace TerminvereinbarungWebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Behandlungsauswahl([Bind(Include = "BehandlungId")] Termin termin)
         {
-            if (ModelState.IsValid)
+            // Find the Termin with the biggest Id
+            var existingTermin = db.TerminSet.OrderByDescending(t => t.Id).FirstOrDefault();
+            if (existingTermin != null)
             {
-                // Create a new Termin object with the selected BehandlungId
-                var newTermin = new Termin
-                {
-                    BehandlungId = termin.BehandlungId,
-                    // Set default values for other properties
-                    ArztId = 1,
-                    PatientId = 1,
-                    angefragt = false,
-                    bestätigt = false,
-                    abgeschlossen = false,
-                    ZeitslotId = 7
-                };
+                // Update the existing Termin with the new values
 
-                // Add the new Termin to the database
-                db.TerminSet.Add(newTermin);
+                existingTermin.BehandlungId = termin.BehandlungId;
+
+
+                // Save changes to the database
+                db.Entry(existingTermin).State = EntityState.Modified;
                 db.SaveChanges();
 
-                // Redirect to the next step (e.g., Arztauswahl)
-                return RedirectToAction("Arztauswahl", new { id = newTermin.Id });
+                // Redirect to the next step (e.g., Zeitslotauswahl)
+                return RedirectToAction("Arztauswahl", new { id = existingTermin.Id });
+            }
+            else
+            {
+                // Handle the case where no Termin exists
+                ModelState.AddModelError("", "No existing Termin found to update.");
             }
 
             ViewBag.BehandlungId = new SelectList(db.BehandlungSet, "Id", "Behandlungart", termin.BehandlungId);

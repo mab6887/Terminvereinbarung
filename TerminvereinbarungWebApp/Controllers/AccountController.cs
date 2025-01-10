@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TerminvereinbarungLib;
@@ -10,6 +13,8 @@ namespace TerminvereinbarungWebApp.Controllers
 {
     public class AccountController : Controller
     {
+        private TerminvereinbarungModelContainer db = new TerminvereinbarungModelContainer();
+
         private readonly TerminvereinbarungModelContainer _context;
 
         public AccountController()
@@ -56,7 +61,37 @@ namespace TerminvereinbarungWebApp.Controllers
                     {
                         return RedirectToAction("Create", "Termins");
                     }
-                    else return RedirectToAction("Behandlungsauswahl", "Termins");
+                    else
+
+
+                    if (ModelState.IsValid)
+                    {
+
+
+                        // Create a new Termin object with the selected BehandlungId
+
+                        var newTermin = new Termin
+
+                        {
+                            BehandlungId = 1,
+                            // Set default values for other properties
+                            ArztId = 1,
+                            PatientId = user.Id,
+                            angefragt = false,
+                            bestätigt = false,
+                            abgeschlossen = false,
+                            ZeitslotId = 7
+                        };
+
+                        // Add the new Termin to the database
+                        db.TerminSet.Add(newTermin);
+                        db.SaveChanges();
+
+                        
+                    }
+
+
+                    return RedirectToAction("Behandlungsauswahl", "Termins");
                 }
 
 
