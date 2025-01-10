@@ -1,8 +1,44 @@
-﻿
+﻿@model TerminvereinbarungLib.Termin
+
 @{
-    ViewBag.Title = "Terminbestätigung";
-    Layout = "~/Views/Home/Index.cshtml";
+    ViewBag.Title = "Create";
 }
 
-<h2>Terminbestätigung</h2>
+<h2>Termin</h2>
 
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Anfrage</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.angefragt, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.angefragt)
+                    @Html.ValidationMessageFor(model => model.angefragt, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+      
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="verbindliche Anfrage senden?" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <h4>Durch das Klicken der verbindlichen Anfrage werden Sie zum Register Bereich weitergeleitet.</h4>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

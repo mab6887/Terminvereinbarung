@@ -189,7 +189,7 @@ namespace TerminvereinbarungWebApp.Controllers
                     db.SaveChanges();
 
                     // Redirect to the next step (e.g., Zeitslotauswahl)
-                    return RedirectToAction("Register","Account", new { id = existingTermin.Id });
+                    return RedirectToAction("Terminbestätigung", new { id = existingTermin.Id });
                 }
                 else
                 {
@@ -202,8 +202,42 @@ namespace TerminvereinbarungWebApp.Controllers
             return View(termin);
         }
 
+        public ActionResult Terminbestätigung()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Terminbestätigung([Bind(Include = "angefragt")] Termin termin)
+        {
+            if (ModelState.IsValid)
+            {
+                // Find the Termin with the biggest Id
+                var existingTermin = db.TerminSet.OrderByDescending(t => t.Id).FirstOrDefault();
+                if (existingTermin != null)
+                {
+                    // Update the existing Termin with the new values
+
+                    existingTermin.angefragt = termin.angefragt;
 
 
+                    // Save changes to the database
+                    db.Entry(existingTermin).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    // Redirect to the next step (e.g., Zeitslotauswahl)
+                    return RedirectToAction("Register", "Account", new { id = existingTermin.Id });
+                }
+                else
+                {
+                    // Handle the case where no Termin exists
+                    ModelState.AddModelError("", "No existing Termin found to update.");
+                }
+            }
+
+            ViewBag.BehandlungId = new SelectList(db.BehandlungSet, "Id", "Behandlungart", termin.BehandlungId);
+            return View(termin);
+        }
 
         // POST: Termins/Edit/5
         // Aktivieren Sie zum Schutz vor Angriffen durch Overposting die jeweiligen Eigenschaften, mit denen eine Bindung erfolgen soll. Weitere Informationen 
