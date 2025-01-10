@@ -63,7 +63,7 @@ namespace TerminvereinbarungWebApp.Controllers
         public ActionResult CreateArzt()
         {
             ViewBag.ArztId = new SelectList(db.UserSet.Where(u => u.Arzt), "Id", "Nachname");
-            ViewBag.PatientId = new SelectList(db.UserSet, "Id", "Vorname");
+            ViewBag.PatientId = new SelectList(db.UserSet.Select(u => new { u.Id, FullName = u.Vorname + " " + u.Nachname }), "Id", "FullName");
             ViewBag.BehandlungId = new SelectList(db.BehandlungSet, "Id", "Behandlungart");
             ViewBag.ZeitslotId = new SelectList(db.ZeitslotSet, "Id", "Startzeitpunkt");
             return View();
