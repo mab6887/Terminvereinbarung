@@ -85,7 +85,24 @@ namespace TerminvereinbarungWebApp.Controllers
             ViewBag.ZeitslotId = new SelectList(db.ZeitslotSet, "Id", "Id", termin.ZeitslotId);
             return View(termin);
         }
+        public ActionResult Behandlungsauswahl()
+        {
 
+            ViewBag.BehandlungId = new SelectList(db.BehandlungSet, "Id", "Behandlungart");
+            return View();
+        }
+        
+        public ActionResult Arztauswahl()
+        {
+            ViewBag.ArztId = new SelectList(db.UserSet.Where(u => u.Arzt), "Id", "Nachname");
+            return View();
+        }
+        
+        public ActionResult Zeitslotauswahl()
+        {
+            ViewBag.ZeitslotId = new SelectList(db.ZeitslotSet, "Id", "Startzeitpunkt");
+            return View();
+        }
         // POST: Termins/Edit/5
         // Aktivieren Sie zum Schutz vor Angriffen durch Overposting die jeweiligen Eigenschaften, mit denen eine Bindung erfolgen soll. Weitere Informationen 
         // finden Sie unter https://go.microsoft.com/fwlink/?LinkId=317598.

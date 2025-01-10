@@ -1,9 +1,35 @@
 ﻿@model TerminvereinbarungLib.Termin
 
 @{
-    ViewBag.Title = "Arztauswahl";
-    Layout = "~/Views/Home/Index.cshtml";
+    ViewBag.Title = "Create";
 }
 
 <h2>Arztauswahl</h2>
 
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Termin</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.ArztId, "ArztId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ArztId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ArztId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    </div>
+}
+
+<div>
+    @Html.ActionLink("weiter zur Zeitauswahl", "Zeitslotauswahl")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
