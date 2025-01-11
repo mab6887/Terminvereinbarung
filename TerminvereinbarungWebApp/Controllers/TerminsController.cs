@@ -97,7 +97,7 @@ namespace TerminvereinbarungWebApp.Controllers
             {
                 db.TerminSet.Add(termin);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("IndexArzt");
             }
 
             ViewBag.ArztId = new SelectList(db.UserSet, "Id", "Vorname", termin.ArztId);
@@ -292,7 +292,7 @@ namespace TerminvereinbarungWebApp.Controllers
             {
                 db.Entry(termin).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("IndexArzt");
             }
             ViewBag.ArztId = new SelectList(db.UserSet, "Id", "Vorname", termin.ArztId);
             ViewBag.PatientId = new SelectList(db.UserSet, "Id", "Vorname", termin.PatientId);
@@ -324,7 +324,7 @@ namespace TerminvereinbarungWebApp.Controllers
             Termin termin = db.TerminSet.Find(id);
             db.TerminSet.Remove(termin);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexArzt");
         }
 
         protected override void Dispose(bool disposing)
