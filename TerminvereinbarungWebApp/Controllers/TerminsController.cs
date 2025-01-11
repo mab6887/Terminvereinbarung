@@ -207,8 +207,8 @@ namespace TerminvereinbarungWebApp.Controllers
 
         public ActionResult Zeitslotauswahl()
         {
-            ViewBag.ZeitslotId = new SelectList(db.ZeitslotSet, "Id", "Startzeitpunkt");
-            return View();
+            var zeitslots = db.ZeitslotSet.OrderBy(z => z.Startzeitpunkt).ToList();
+            return View(zeitslots);
         }
 
         [HttpPost]
